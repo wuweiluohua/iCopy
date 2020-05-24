@@ -22,7 +22,8 @@ def restricted(func):
         user_id = update.effective_user.id
         if user_id not in settings.ENABLED_USERS:
             print(f"Unauthorized access denied for {user_id}.")
-            update.message.reply_text('您的用户ID{user_id}未经授权 请联系管理员')
+            update.message.reply_text('Hi {} 您好'.format(update.message.from_user.first_name))
+            update.message.reply_text('您的用户ID:{} 未经授权\n请联系管理员'.format(update.message.from_user.id))
             return
         return func(update, context, *args, **kwargs)
     return wrapped
@@ -30,8 +31,8 @@ def restricted(func):
 #start
 @restricted
 def start(update, context):
-    update.message.reply_text('Hi! 欢迎使用 iCopy\n'
-        'Fxxkr LAB 出品必属极品\n'
+    update.message.reply_text('Hi! {} 欢迎使用 iCopy\n'.format(update.message.from_user.first_name))
+    update.message.reply_text('Fxxkr LAB 出品必属极品\n'
         '请输入 /help 查询使用命令')
 
 #error handler
@@ -41,7 +42,7 @@ def error(update, context):
 
 @restricted
 def help(update, context):
-	update.message.reply_text('/help - 查询使用命令 \n '
+	update.message.reply_text('/help - 查询使用命令 \n'
 	'/quick Google Drive 极速转存 \n'
 	'/copy 自定义目录转存 \n'
 	'/pre1 预设转存目录1 \n'
